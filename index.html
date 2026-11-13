@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jiayi Song</title>
+<meta property="og:title" content="Jiayi Song">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/portrait.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f4fd8'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='28' font-weight='700' fill='white' text-anchor='middle'%3EJS%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Jiayi Song, Ph.D. student in Computer Science at Texas A&amp;M University. 3D reconstruction and reasoning over 3D scenes, and adapting foundation models to them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Layout: sticky profile column on the left, a single reading column on the right; stacks on phones. */
+  :root {
+    --bg: #f7f8fb;
+    --surface: #ffffff;
+    --ink: #141826;
+    --muted: #5b6275;
+    --rule: #e2e5ee;
+    --accent: #2f4fd8;
+    --accent-soft: #e8ecfd;
+    --tile: #ffffff;
+    --display: "Bricolage Grotesque", "Inter", system-ui, sans-serif;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e111a;
+      --surface: #151a26;
+      --ink: #e7eaf3;
+      --muted: #9aa2b8;
+      --rule: #252c3d;
+      --accent: #8ea3ff;
+      --accent-soft: #1d2540;
+      --tile: #f4f5f8;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e111a;
+    --surface: #151a26;
+    --ink: #e7eaf3;
+    --muted: #9aa2b8;
+    --rule: #252c3d;
+    --accent: #8ea3ff;
+    --accent-soft: #1d2540;
+    --tile: #f4f5f8;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  p { margin: 0; }
+  h1, h2, h3 { text-wrap: balance; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  .page {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-block: 56px 40px;
+    padding-left: max(24px, env(safe-area-inset-left, 0px));
+    padding-right: max(24px, env(safe-area-inset-right, 0px));
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 72px;
+  }
+
+  /* Profile column */
+  .profile { position: sticky; top: calc(32px + env(safe-area-inset-top, 0px)); align-self: start; display: grid; gap: 22px; }
+  .portrait { width: 100%; border-radius: 14px; border: 1px solid var(--rule); }
+  .profile h1 { font-family: var(--display); font-weight: 700; font-size: 38px; line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 6px; }
+  .role { color: var(--muted); font-size: 15px; line-height: 1.5; }
+  .role strong { color: var(--ink); font-weight: 500; }
+  .contact { display: grid; gap: 10px; }
+  .email { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 13px; color: var(--ink); }
+  .email span { user-select: all; overflow-wrap: anywhere; }
+  .copy { font: 500 12px var(--sans); color: var(--accent); background: var(--accent-soft); border: 0; border-radius: 999px; padding: 3px 10px; cursor: pointer; flex: none; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+  .links a { display: inline-block; font-size: 14px; font-weight: 500; padding: 6px 14px; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink); background: var(--surface); }
+  .links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags span { font-size: 12.5px; color: var(--muted); border: 1px solid var(--rule); border-radius: 6px; padding: 2px 8px; }
+  .side-nav { display: grid; gap: 4px; padding-top: 18px; border-top: 1px solid var(--rule); font-size: 14px; }
+  .side-nav a { color: var(--muted); }
+  .side-nav a:hover { color: var(--accent); }
+
+  /* Main column */
+  main { min-width: 0; display: grid; gap: 72px; }
+  .intro { display: grid; gap: 12px; max-width: 38em; }
+  .intro p { font-size: 16.5px; line-height: 1.7; }
+  .intro .hello { font-family: var(--display); font-size: 27px; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; margin-bottom: 4px; text-wrap: balance; }
+  .intro em { font-style: normal; color: var(--accent); }
+  .intro .aside { font-size: 14px; color: var(--muted); }
+  section { display: grid; gap: 28px; scroll-margin-top: 24px; }
+  .eyebrow { display: flex; align-items: baseline; gap: 14px; }
+  .eyebrow h2 { font-family: var(--display); font-weight: 600; font-size: 26px; letter-spacing: -0.01em; margin: 0; }
+  .eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--rule); align-self: center; }
+
+  /* Projects */
+  .projects { display: grid; gap: 28px; }
+  .project { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 28px; padding: 20px; background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; }
+  .shot { margin: 0; display: grid; gap: 8px; align-content: start; }
+  .frame { aspect-ratio: 4 / 3; max-width: 100%; border-radius: 8px; overflow: hidden; background: var(--tile); display: flex; align-items: center; justify-content: center; }
+  .frame.dark { background: #000; }
+  .frame.ocean { aspect-ratio: auto; background: #05161e; }
+  .frame.ocean img { height: auto; object-fit: cover; }
+  .frame.pu { aspect-ratio: auto; background: #ffffff; }
+  .frame.pu img { height: auto; }
+  .frame img { width: 100%; height: 100%; object-fit: contain; }
+  .shot figcaption { color: var(--muted); font-size: 12.5px; line-height: 1.5; }
+  .project .text { min-width: 0; display: grid; gap: 10px; align-content: start; }
+  .meta { font-family: var(--mono); font-size: 12.5px; color: var(--muted); letter-spacing: 0.02em; }
+  .project h3 { font-family: var(--display); font-weight: 600; font-size: 21px; line-height: 1.25; margin: 0; }
+  .project p { font-size: 15px; color: var(--ink); }
+  .result { display: inline-block; font-size: 13px; font-weight: 500; color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 2px 8px; justify-self: start; }
+  .more { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; font-weight: 500; padding-top: 4px; }
+  .more a::after { content: " \2197"; }
+  .project.also { grid-template-columns: 1fr; }
+  .project.wide { grid-template-columns: 1fr; gap: 18px; }
+  .project.wide .text { max-width: 44em; }
+
+  /* Publications */
+  .pubs { list-style: none; margin: 0; padding: 0; display: grid; }
+  .pubs li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-top: 1px solid var(--rule); }
+  .pubs li:last-child { border-bottom: 1px solid var(--rule); }
+  .pubs .yr { font-family: var(--mono); font-size: 13px; color: var(--muted); padding-top: 2px; font-variant-numeric: tabular-nums; }
+  .pubs .title { font-weight: 500; line-height: 1.45; color: var(--ink); }
+  .pubs a.title:hover { color: var(--accent); }
+  .pubs .venue { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 4px; font-size: 13.5px; color: var(--muted); }
+  .badge { font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; border-radius: 4px; padding: 1px 6px; }
+  .badge.first { color: var(--accent); background: var(--accent-soft); }
+  .badge.co { color: var(--muted); border: 1px solid var(--rule); }
+
+  /* Education */
+  .schools { display: grid; gap: 14px; }
+  .school { display: grid; grid-template-columns: 168px minmax(0, 1fr); gap: 20px; align-items: center; padding: 16px; border: 1px solid var(--rule); border-radius: 14px; background: var(--surface); }
+  .crest-tile { height: 72px; border-radius: 8px; background: var(--tile); display: flex; align-items: center; justify-content: center; padding: 10px 14px; }
+  .crest-tile img { max-height: 100%; width: auto; }
+  .crest-tile .fudan { height: 52px; }
+  .school h3 { font-family: var(--display); font-weight: 600; font-size: 19px; margin: 0; }
+  .school p { font-size: 15px; }
+  .school .meta { margin-top: 2px; }
+
+  /* Interests and honors */
+  .topics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .topic { padding: 18px; border: 1px solid var(--rule); border-radius: 14px; background: var(--surface); display: grid; gap: 6px; align-content: start; }
+  .topic h3 { font-family: var(--display); font-weight: 600; font-size: 17px; line-height: 1.3; margin: 0; }
+  .topic p { font-size: 14.5px; color: var(--muted); }
+  .honors { list-style: none; margin: 0; padding: 0; display: grid; }
+  .honors li { display: flex; justify-content: space-between; gap: 24px; padding: 10px 0; border-top: 1px solid var(--rule); font-size: 15px; }
+  .honors li:last-child { border-bottom: 1px solid var(--rule); }
+  .honors .meta { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  h3.sub { font-family: var(--display); font-weight: 600; font-size: 19px; margin: 8px 0 0; }
+
+  footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: var(--muted); font-size: 13px; padding-top: 8px; }
+
+  @media (max-width: 900px) {
+    .page { grid-template-columns: 1fr; gap: 48px; padding-block: 32px 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+    .profile { position: static; grid-template-columns: 160px minmax(0, 1fr); column-gap: 20px; align-items: start; }
+    .profile > .who { grid-column: 2; grid-row: 1; }
+    .profile > .portrait { grid-column: 1; grid-row: 1; }
+    .profile > .contact, .profile > .tags { grid-column: 1 / -1; }
+    .side-nav { display: none; }
+    .project { grid-template-columns: 1fr; }
+    .topics { grid-template-columns: 1fr; }
+    main { gap: 56px; }
+  }
+  @media (max-width: 520px) {
+    .profile { grid-template-columns: 1fr; }
+    .profile > .who, .profile > .portrait { grid-column: 1; grid-row: auto; }
+    .portrait { max-width: 220px; }
+    .profile h1 { font-size: 32px; }
+    .intro .hello { font-size: 23px; }
+    .project { padding: 14px; }
+    .school { grid-template-columns: 1fr; }
+    .crest-tile { justify-self: start; width: 168px; }
+    .pubs li { grid-template-columns: 1fr; gap: 2px; }
+    .honors li { flex-direction: column; gap: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <aside class="profile" id="top">
+    <img class="portrait" src="assets/portrait.jpg" width="1000" height="850" alt="Jiayi Song with a koala">
+    <div class="who">
+      <h1>Jiayi Song</h1>
+      <p class="role">First-year Ph.D. student, Computer Science (joined Fall 2026)<br><strong>Texas A&amp;M University</strong><br>Advised by Prof. Wenping Wang and Prof. Xin Li</p>
+    </div>
+    <div class="contact">
+      <div class="email"><span id="addr">jiayisong@tamu.edu</span><button class="copy" id="copy-email" type="button">Copy</button></div>
+      <ul class="links">
+        <li><a href="https://github.com/Kallyelish">GitHub</a></li>
+        <li><a href="Jiayi_Song_CV.pdf">CV</a></li>
+      </ul>
+    </div>
+    <div class="tags" aria-label="Research areas">
+      <span>3D Gaussian Splatting</span><span>4D reconstruction</span><span>3D reasoning</span><span>SFT + DPO</span>
+    </div>
+    <nav class="side-nav" aria-label="Sections">
+      <a href="#work">Selected work</a>
+      <a href="#publications">Publications</a>
+      <a href="#education">Education</a>
+      <a href="#about">Interests and honors</a>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="intro">
+      <p class="hello">Hi, I'm Jiayi! I work on <em>3D vision and graphics</em>.</p>
+      <p>I'm excited to have joined Texas A&amp;M this fall as a first-year Ph.D. student, working with Prof. Wenping Wang and Prof. Xin Li. Before that, I studied computer science at Fudan University.</p>
+      <p>Most of my work so far is on scene reconstruction; right now I'm working on recovering geometry and appearance together. I'm also drawn to post-training: using fine-tuning and preference optimization to teach large models to reason about 3D scenes.</p>
+      <p class="aside">And yes, that's a koala in the photo.</p>
+    </div>
+
+    <section id="work">
+      <div class="eyebrow"><h2>Selected work</h2></div>
+      <div class="projects">
+
+        <article class="project wide">
+          <figure class="shot">
+            <div class="frame ocean"><img src="assets/ocean4d.jpg" width="1400" height="621" alt="3D view of the reconstructed water surface in a simulated wave tank, shaded by height."></div>
+            <figcaption>Reconstructed water surface in a simulated wave tank.</figcaption>
+          </figure>
+          <div class="text">
+            <span class="meta">2026 to now · In progress</span>
+            <h3>Physically grounded 4D reconstruction of fluids and waves</h3>
+            <p>Reconstructing moving water in 3D over time from only a few cameras, for coastal-hazard monitoring. The goal is a reconstruction that is accurate and physically grounded, so that wave heights and how the water evolves can be read from it.</p>
+            <div class="more"><a href="https://kallyelish.github.io/Ocean4D/">Project page</a></div>
+          </div>
+        </article>
+
+        <article class="project">
+          <figure class="shot">
+            <div class="frame"><img src="assets/deepthink3d.png" width="1260" height="862" alt="DeepThink3D pipeline: an LLM writes programs over a 3D scene, then is adapted with supervised fine-tuning and preference refinement on chosen versus rejected programs."></div>
+            <figcaption>Programs over a 3D scene, supervised adaptation, then preference refinement on programs that run correctly versus ones that fail.</figcaption>
+          </figure>
+          <div class="text">
+            <span class="meta">2025 · First author</span>
+            <h3>DeepThink3D: programmatic reasoning for 3D situated questions</h3>
+            <p>An LLM answers questions about a 3D scene by writing programs that run over it. Training is supervised fine-tuning on programs derived from reasoning chains, then DPO on successful versus failed programs.</p>
+            <div class="more"><a href="https://arxiv.org/abs/2508.15548">Paper</a><a href="https://github.com/Kallyelish/DeepThink3D">Code</a></div>
+          </div>
+        </article>
+
+        <article class="project">
+          <figure class="shot">
+            <div class="frame"><img src="assets/ref-unlock.jpg" width="1600" height="1344" alt="Ref-Unlock compared with GS-IR, 2DGS, GShader, and 3DGS on a mirror scene, with text-prompted reflection editing below."></div>
+            <figcaption>A mirror scene against GS-IR, 2DGS, GShader, and 3DGS, with text-prompted reflection editing below.</figcaption>
+          </figure>
+          <div class="text">
+            <span class="meta">2024 to 2025 · First author</span>
+            <h3>Ref-Unlock: reflections in 3D Gaussian Splatting</h3>
+            <p>A dual-branch Gaussian representation that separates reflected and transmitted light on mirrors and glass, with depth supervision and a geometry-aware smoothness term. It allows controllable reflection editing.</p>
+            <div class="more"><a href="https://ref-unlock.github.io/">Project page</a><a href="https://arxiv.org/abs/2507.06103">Paper</a><a href="https://github.com/Kallyelish/Ref-Unlock">Code</a></div>
+          </div>
+        </article>
+
+        <article class="project wide">
+          <figure class="shot">
+            <div class="frame pu"><img src="assets/mbpu-pu1k.jpg" width="1800" height="697" alt="Point clouds of a statue, a horse, and a chair upsampled 4 times: input, PU-Net, Grad-PU, MBPU, and ground truth, each with a zoomed detail."></div>
+            <figcaption>4× upsampling on PU1K: input, PU-Net, Grad-PU, ours, and ground truth, with zoomed details. Figure 4 of the paper.</figcaption>
+          </figure>
+          <div class="text">
+            <span class="meta">2024 · First author</span>
+            <h3>MBPU: Mamba-based point cloud upsampling</h3>
+            <p>A plug-and-play Mamba model for upsampling large, sparse point clouds such as LiDAR scans. It progressively refines interpolated points by predicting position shifts and point-to-point distances, and a fast differentiable point renderer reduces artifacts on the surface.</p>
+            <div class="more"><a href="https://arxiv.org/abs/2410.15941">Paper</a></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section id="publications">
+      <div class="eyebrow"><h2>Publications</h2></div>
+      <ul class="pubs">
+        <li><span class="yr">2026</span><div>
+          <span class="title">3D Reconstruction and Novel View Synthesis on Non-Lambertian Surfaces: A Survey</span>
+          <div class="venue"><span class="badge co">Co-author</span>Accepted by IJCV 2026</div></div></li>
+        <li><span class="yr">2026</span><div>
+          <a class="title" href="https://doi.org/10.1016/j.eswa.2026.131399">ChemAU: A collaborative framework for chemical reasoning via adaptive uncertainty estimation</a>
+          <div class="venue"><span class="badge co">Co-author</span>Expert Systems with Applications 2026</div></div></li>
+        <li><span class="yr">2025</span><div>
+          <a class="title" href="https://arxiv.org/abs/2508.15548">DeepThink3D: Enhancing Large Language Models with Programmatic Reasoning in Complex 3D Situated Reasoning Tasks</a>
+          <div class="venue"><span class="badge first">First author</span>arXiv:2508.15548</div></div></li>
+        <li><span class="yr">2025</span><div>
+          <a class="title" href="https://arxiv.org/abs/2507.06103">Reflections Unlock: Geometry-Aware Reflection Disentanglement in 3D Gaussian Splatting for Photorealistic Scenes Rendering</a>
+          <div class="venue"><span class="badge first">First author</span>arXiv:2507.06103</div></div></li>
+        <li><span class="yr">2025</span><div>
+          <a class="title" href="https://arxiv.org/abs/2507.11037">FootGait3D: A Multi-View High-Resolution Ankle-Foot Point Cloud Dataset for Occlusion-Robust 3D Completion</a>
+          <div class="venue"><span class="badge co">Co-author</span>Accepted by CVM 2025</div></div></li>
+        <li><span class="yr">2024</span><div>
+          <a class="title" href="https://arxiv.org/abs/2410.15941">MBPU: A Plug-and-Play State Space Model for Point Cloud Upsampling with Fast Point Rendering</a>
+          <div class="venue"><span class="badge first">First author</span>arXiv:2410.15941</div></div></li>
+      </ul>
+    </section>
+
+    <section id="education">
+      <div class="eyebrow"><h2>Education</h2></div>
+      <div class="schools">
+        <div class="school">
+          <div class="crest-tile"><img src="assets/tamu.png" width="900" height="195" alt="Texas A&amp;M University logo" onerror="this.remove()"></div>
+          <div>
+            <h3>Texas A&amp;M University</h3>
+            <p>First-year Ph.D. student, Computer Science</p>
+            <p class="meta">Fall 2026 to now · Advised by Prof. Wenping Wang and Prof. Xin Li</p>
+          </div>
+        </div>
+        <div class="school">
+          <div class="crest-tile"><img class="fudan" src="assets/fudan.svg" width="52" height="52" alt="Fudan University emblem"></div>
+          <div>
+            <h3>Fudan University</h3>
+            <p>B.S., Computer Science and Technology, with honors</p>
+            <p class="meta">2022 to 2026</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="eyebrow"><h2>Research interests</h2></div>
+      <div class="topics">
+        <div class="topic">
+          <h3>3D perception and scene representation</h3>
+          <p>Geometry-aware 3D representations such as 3D Gaussian Splatting, point clouds, and surfaces, learned from visual input.</p>
+        </div>
+        <div class="topic">
+          <h3>Foundation models for 3D reasoning</h3>
+          <p>Adapting LLMs with supervised fine-tuning and preference optimization (DPO) to reason over 3D scenes.</p>
+        </div>
+      </div>
+      <h3 class="sub">Honors</h3>
+      <ul class="honors">
+        <li><span>National Scholarship, Ministry of Education of the PRC</span><span class="meta">2022 to 2023</span></li>
+      </ul>
+    </section>
+
+    <footer>
+      <span>Jiayi Song · College Station, Texas</span>
+      <span>Last updated November 2026</span>
+    </footer>
+  </main>
+</div>
+
+<script>
+  document.getElementById('copy-email').addEventListener('click', function () {
+    var btn = this, text = document.getElementById('addr').textContent;
+    function done(msg) { btn.textContent = msg; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); }
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById('addr'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); done('Selected');
+    }
+    try {
+      navigator.clipboard.writeText(text).then(function () { done('Copied'); }, fallback);
+    } catch (e) { fallback(); }
+  });
+</script>
+</body>
+</html>
